@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import "./template.css";
 import "./App.css";
 import AutoCompleteSearch from "./components/AutoCompleteSearch";
+import Options from "./components/Options";
+import Output from "./components/Output";
 import pokemondata from "./data/pokemondata";
 import cpmultipliers from "./data/cpmultipliers";
 import weatherBoosts from "./data/weatherBoosts";
@@ -151,6 +154,21 @@ class App extends Component {
             />
             {this.renderSuggestions()}
           </div>
+          <br />
+          <Options
+            options={this.state.options}
+            changeSort={value => this.changeSort(value)}
+            toggleNundo={this.toggleNundo}
+            toggleLvl15={this.toggleLvl15}
+            toggleUnder90={this.toggleUnder90}
+            toggleColor={this.toggleColor}
+            toggleCPFilter={this.toggleCPFilter}
+            filterCP={this.state.options.filtervalue}
+            onFilterChanged={this.onFilterChanged}
+            changeHighestLevel={value => this.changeHighestLevel(value)}
+          />
+          <br />
+          <Output />
         </div>
       </div>
     );
