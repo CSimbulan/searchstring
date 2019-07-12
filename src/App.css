@@ -11,6 +11,7 @@
   text-align: left;
   word-wrap: break-word;
   height: 200px;
+  overflow: scroll;
 }
 
 .ImageHide {
@@ -39,4 +40,83 @@
 
 .BlockLeftHeader {
   font-size: 2vw;
+}
+
+.Header .Instructions {
+  font-size: 1em;
+}
+
+.modal {
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 600px;
+  overflow: auto;
+}
+.modal .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
+}
+.modal .content {
+  width: 90%;
+  padding: 10px 5px;
+  margin: auto;
+  font-size: 1vw;
+}
+
+.modal .content li {
+  text-align: left;
+}
+.modal .actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+}
+.modal .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
+
+.buttonManual {
+  background-color: #005296;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.5%;
+  text-align: center;
+  border: 2px solid gray;
+  display: inline-block;
+  width: 8vw;
+  font-size: 0.8vw;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.buttonReset {
+  background-color: #c00202;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.5%;
+  text-align: center;
+  border: 2px solid gray;
+  display: inline-block;
+  width: 8vw;
+  font-size: 0.8vw;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

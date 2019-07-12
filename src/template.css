@@ -38,6 +38,7 @@ img {
 
 .Header {
   width: 90%;
+  font-family: "Serif";
   margin: auto;
 }
 
@@ -173,6 +174,80 @@ img {
   border: 2px solid gray;
 }
 
+@media only screen and (max-width: 600px) {
+  .Table table {
+    font-size: 2.5vw;
+    width: 100%;
+  }
+
+  .Table table th,
+  td {
+    padding: 0.1%;
+  }
+
+  .Table table th {
+    font-size: 1.5vw;
+  }
+
+  h1 {
+    font-size: 4vw;
+  }
+
+  #BlockLeft {
+    font-size: 2vw;
+  }
+
+  .BlockLeftHeader {
+    font-size: 2.3vw;
+  }
+
+  #BlockRight {
+    font-size: 1.5vw;
+  }
+
+  .TypeIcon {
+    width: 25%;
+    height: 25%;
+  }
+  .Box {
+    width: 45%;
+    margin: 5px;
+  }
+
+  .buttonSort {
+    width: 90%;
+    font-size: 3vw;
+  }
+
+  .buttonExport {
+    width: 25%;
+    font-size: 1.75vw;
+  }
+
+  .buttonManual {
+    width: 40%;
+    font-size: 0.8em;
+  }
+
+  .buttonReset {
+    width: 15%;
+    font-size: 1.75vw;
+  }
+
+  .Header .Instructions {
+    font-size: 0.8em;
+  }
+
+  .modal .content {
+    font-size: 1em;
+    overflow-y: scroll;
+  }
+
+  .Box input {
+    width: 90%;
+  }
+}
+
 /* Add mouse hover effect for buttons. For some reason still works on some mobile devices.*/
 @media (pointer: fine) {
   .AutoCompleteSearch .ClearSearch:hover {
@@ -194,9 +269,36 @@ img {
     box-shadow: none;
     transform: translateY(2px);
   }
+
+  .buttonManual:hover {
+    background-color: #2b9dfa;
+    border: 2px solid white;
+  }
+
+  .buttonReset:hover {
+    background-color: #fc4949;
+    border: 2px solid white;
+  }
+
+  .modal .close:hover {
+    color: white;
+    background-color: #4bd5ff;
+  }
 }
 
 .TypeIcon {
   width: 20%;
   height: 20%;
+}
+
+@media only screen and (max-height: 600px) and (orientation: portrait) {
+  .modal {
+    height: 120vw;
+  }
+}
+
+@media only screen and (max-height: 600px) and (orientation: landscape) {
+  .modal {
+    height: 40vw;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./template.css";
 import "./App.css";
+import Instructions from "./components/Instructions";
 import AutoCompleteSearch from "./components/AutoCompleteSearch";
 import Options from "./components/Options";
 import Output from "./components/Output";
@@ -178,6 +179,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="Container">
+          <Instructions version={this.state.version_number} />
           <div className="AutoCompleteSearch">
             <AutoCompleteSearch
               items={this.state.data.names}
