@@ -21,6 +21,7 @@ function getinitialState() {
       suggestions: [],
       text: "",
       selectedStats: [],
+      cpArray: [],
       statsArray: [],
       typing: [],
       counters: [],
@@ -96,6 +97,7 @@ class App extends Component {
     }
     this.setState(() => ({ state }));
     this.getWeather();
+    this.getCPLoop();
   };
 
   getWeather = () => {
@@ -140,6 +142,38 @@ class App extends Component {
     return inputArray.indexOf(item) === index;
   }; /*Remove duplicates*/
 
+  calculateCP = (atk, def, sta, lvl) => {
+    return Math.floor(
+      (atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(this.getCPM(lvl), 2)) /
+        10
+    );
+  };
+
+  getCPM = level => {
+    var cpm = 0;
+    const cpmArray = this.state.data.cpm;
+    cpm = parseFloat(cpmArray[level * 2 - 2].split(",")[1]);
+    return cpm;
+  };
+
+  getCPLoop = () => {
+    var cps = [parseInt(this.state.search.selected_number)];
+    var hps = [];
+    var atk = parseInt(this.state.search.selectedStats[0]);
+    var def = parseInt(this.state.search.selectedStats[1]);
+    var sta = parseInt(this.state.search.selectedStats[2]);
+    for (var i = 1; i <= 40; i += 0.5) {
+      cps.push(
+        "cp" + Math.max(this.calculateCP(atk + 15, def + 15, sta + 15, i), 10)
+      );
+      hps.push("hp" + Math.floor((sta + 15) * this.getCPM(i)));
+    }
+    cps = cps.concat(hps);
+    const state = { ...this.state };
+    state.search.cpArray = cps;
+    this.setState(() => ({ state }));
+  };
+
   render() {
     return (
       <div className="App">
@@ -150,25 +184,23 @@ class App extends Component {
               search={this.state.search}
               onTextChanged={this.onTextChanged}
               renderSuggestions={this.renderSuggestions}
-              /*clearSearch={clearSearch}*/
+              clearSearch={this.clearSearch}
             />
             {this.renderSuggestions()}
           </div>
           <br />
-          <Options
+          <Output
+            cpArray={this.state.search.cpArray.join(",")}
             options={this.state.options}
-            changeSort={value => this.changeSort(value)}
-            toggleNundo={this.toggleNundo}
-            toggleLvl15={this.toggleLvl15}
-            toggleUnder90={this.toggleUnder90}
-            toggleColor={this.toggleColor}
-            toggleCPFilter={this.toggleCPFilter}
-            filterCP={this.state.options.filtervalue}
-            onFilterChanged={this.onFilterChanged}
-            changeHighestLevel={value => this.changeHighestLevel(value)}
+            stats={this.state.search.statsArray}
+            selected={this.state.search.selected}
+            selected_number={this.state.search.selected_number}
+            selected_stats={this.state.search.selectedStats}
+            typing={this.state.search.typing}
+            counters={this.state.search.counters}
+            resistances={this.state.search.resistances}
+            weather={this.state.search.weather}
           />
-          <br />
-          <Output />
         </div>
       </div>
     );

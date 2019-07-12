@@ -1,0 +1,5 @@
+Options:
+-HP
+-toggle off showing half levels (1.5, 2.5 etc..)
+-trash strings
+-additional IV options
