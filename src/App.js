@@ -32,10 +32,12 @@ function getinitialState() {
     options: {
       id: "options",
       sort: "cp",
-      toggle: { nundo: true, lvl15: false, under90: false, color: true },
+      toggle: { show36plus: false },
       cpfilter: false,
       filtervalue: "",
-      highestLevel: 40
+      atkiv: 15,
+      defiv: 15,
+      staiv: 15
     },
     version_number: "1.0.0"
   };
@@ -163,16 +165,68 @@ class App extends Component {
     var atk = parseInt(this.state.search.selectedStats[0]);
     var def = parseInt(this.state.search.selectedStats[1]);
     var sta = parseInt(this.state.search.selectedStats[2]);
-    for (var i = 1; i <= 40; i += 0.5) {
+    var atkiv = this.state.options.atkiv;
+    var defiv = this.state.options.defiv;
+    var staiv = this.state.options.staiv;
+    var MAXLEVEL = 35;
+    if (this.state.options.toggle.show36plus) {
+      MAXLEVEL = 40;
+    }
+    for (var i = 1; i <= MAXLEVEL; i += 0.5) {
       cps.push(
-        "cp" + Math.max(this.calculateCP(atk + 15, def + 15, sta + 15, i), 10)
+        "cp" +
+          Math.max(
+            this.calculateCP(atk + atkiv, def + defiv, sta + staiv, i),
+            10
+          )
       );
-      hps.push("hp" + Math.floor((sta + 15) * this.getCPM(i)));
+      hps.push(
+        "hp" + Math.floor((sta + this.state.options.staiv) * this.getCPM(i))
+      );
     }
     cps = cps.concat(hps);
     const state = { ...this.state };
     state.search.cpArray = cps;
     this.setState(() => ({ state }));
+  };
+
+  onAtkChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.atkiv = value;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected && !isNaN(value) && value <= 15) {
+      this.getCPLoop();
+    }
+  };
+
+  onDefChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.defiv = value;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected && !isNaN(value) && value <= 15) {
+      this.getCPLoop();
+    }
+  };
+
+  onStaChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.staiv = value;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected && !isNaN(value) && value <= 15) {
+      this.getCPLoop();
+    }
+  };
+
+  toggleShowAllLevels = e => {
+    const state = { ...this.state };
+    state.options.toggle.show36plus = !state.options.toggle.show36plus;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected) {
+      this.getCPLoop();
+    }
   };
 
   render() {
@@ -190,6 +244,14 @@ class App extends Component {
             />
             {this.renderSuggestions()}
           </div>
+          <br />
+          <Options
+            options={this.state.options}
+            onAtkChanged={this.onAtkChanged}
+            onDefChanged={this.onDefChanged}
+            onStaChanged={this.onStaChanged}
+            toggleShowAllLevels={this.toggleShowAllLevels}
+          ></Options>
           <br />
           <Output
             cpArray={this.state.search.cpArray.join(",")}
