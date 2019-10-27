@@ -37,7 +37,9 @@ function getinitialState() {
       filtervalue: "",
       atkiv: 15,
       defiv: 15,
-      staiv: 15
+      staiv: 15,
+      percentage: 0,
+      stars: ""
     },
     version_number: "1.0.0"
   };
@@ -159,16 +161,39 @@ class App extends Component {
     return cpm;
   };
 
+  calculatePercentage = (a, d, s) => {
+    return (a + d + s) / 45.0;
+  };
+
+  determineStars = percent => {
+    switch (true) {
+      case percent < 0.49:
+        return "&0*";
+      case percent < 0.65:
+        return "&1*";
+      case percent < 0.82:
+        return "&2*";
+      case percent < 1:
+        return "&3*";
+      case percent === 1:
+        return "&4*";
+      default:
+        return "";
+    }
+  };
+
   getCPLoop = () => {
-    var cps = [parseInt(this.state.search.selected_number)];
+    var atkiv = this.state.options.atkiv;
+    var defiv = this.state.options.defiv;
+    var staiv = this.state.options.staiv;
+    var percentage = this.calculatePercentage(atkiv, defiv, staiv);
+    var stars = this.determineStars(percentage);
+    var MAXLEVEL = 35;
+    var cps = [this.state.search.selected_number.split("_")[0] + stars];
     var hps = [];
     var atk = parseInt(this.state.search.selectedStats[0]);
     var def = parseInt(this.state.search.selectedStats[1]);
     var sta = parseInt(this.state.search.selectedStats[2]);
-    var atkiv = this.state.options.atkiv;
-    var defiv = this.state.options.defiv;
-    var staiv = this.state.options.staiv;
-    var MAXLEVEL = 35;
     if (this.state.options.toggle.show36plus) {
       MAXLEVEL = 40;
     }
@@ -184,12 +209,15 @@ class App extends Component {
         "hp" + Math.floor((sta + this.state.options.staiv) * this.getCPM(i))
       );
     }
-    cps = cps.concat(hps);
     var start = [];
     start.push(cps.slice(0, 2).join("&"));
-    start = start.concat(cps.slice(2));
+    start = start.concat(cps.slice(2, -1));
+    start.push(cps[cps.length - 1] + "&" + hps[0]);
+    start = start.concat(hps.slice(1));
     const state = { ...this.state };
     state.search.cpArray = start;
+    state.options.percentage = percentage;
+    state.options.stars = stars.slice(1);
     this.setState(() => ({ state }));
   };
 

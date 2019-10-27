@@ -26,6 +26,14 @@ class Output extends Component {
     }
   };
 
+  getHeaderClass = () => {
+    if (this.props.selected) {
+      return "";
+    } else {
+      return "ImageHide";
+    }
+  };
+
   getPkmnImagePath = shiny => {
     if (this.props.selected === "") {
       return "";
@@ -87,10 +95,50 @@ class Output extends Component {
     );
   };
 
+  formatPercent = () => {
+    if (this.props.selected === "") {
+      return "";
+    }
+
+    return " (" + (this.props.options.percentage * 100).toFixed(1) + "%)";
+  };
+
+  getStarsSticker = () => {
+    if (this.props.selected === "") {
+      return "";
+    }
+    let stars = this.props.options.stars;
+
+    switch (true) {
+      case stars === "0*":
+        return process.env.PUBLIC_URL + "/misc_icons/zero_stars.png";
+      case stars === "1*":
+        return process.env.PUBLIC_URL + "/misc_icons/one_star.png";
+      case stars === "2*":
+        return process.env.PUBLIC_URL + "/misc_icons/two_stars.png";
+      case stars === "3*":
+        return process.env.PUBLIC_URL + "/misc_icons/three_stars.png";
+      case stars === "4*":
+        return process.env.PUBLIC_URL + "/misc_icons/four_stars.png";
+      default:
+        return process.env.PUBLIC_URL + "/misc_icons/zero_stars.png";
+    }
+  };
+
   render() {
     return (
       <div className="Output">
-        <h1>{this.getName()}</h1>
+        <h1>
+          <div className={this.getHeaderClass()}>
+            {this.getName() + this.formatPercent()}
+
+            <img
+              className="StarsSticker"
+              src={this.getStarsSticker()}
+              alt=""
+            ></img>
+          </div>
+        </h1>
         <div className={this.getImageClass()}>
           <div className="Block" id="BlockLeft">
             <span className="BlockLeftHeader">Base Stats</span>
