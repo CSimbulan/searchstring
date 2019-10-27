@@ -210,10 +210,10 @@ class App extends Component {
       );
     }
     var start = [];
-    start.push(cps.slice(0, 2).join("&"));
-    start = start.concat(cps.slice(2, -1));
-    start.push(cps[cps.length - 1] + "&" + hps[0]);
-    start = start.concat(hps.slice(1));
+    start.push(cps.slice(0, 2).join("&")); // Combine the dex number, stars rating, and first index of cps with "&".
+    start = start.concat(cps.slice(2, -1)); // Push the rest of the cps array.
+    start.push(cps[cps.length - 1] + "&" + hps[0]); // Combine the last index of cps and first index of hps with "&".
+    start = start.concat(hps.slice(1)); // Push the rest of the hps array.
     const state = { ...this.state };
     state.search.cpArray = start;
     state.options.percentage = percentage;
