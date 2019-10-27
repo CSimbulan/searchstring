@@ -185,8 +185,11 @@ class App extends Component {
       );
     }
     cps = cps.concat(hps);
+    var start = [];
+    start.push(cps.slice(0, 2).join("&"));
+    start = start.concat(cps.slice(2));
     const state = { ...this.state };
-    state.search.cpArray = cps;
+    state.search.cpArray = start;
     this.setState(() => ({ state }));
   };
 
