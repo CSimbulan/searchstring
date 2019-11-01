@@ -1,9 +1,10 @@
 {
   "name": "searchstring",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.6",
+    "react": "^16.11.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
     "reactjs-popup": "^1.4.1"
