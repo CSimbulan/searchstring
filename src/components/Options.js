@@ -65,11 +65,19 @@ class Options extends Component {
             <input className="invis" type="checkbox"></input>
           </div>
           <div className="Box-Wide-Div">
-            Show Lvl 36-40{" "}
+            Show Lvl 35.5-40{" "}
             <input
               className="CheckBox"
               type="checkbox"
               onChange={this.props.toggleShowAllLevels}
+            ></input>
+          </div>
+          <div className="Box-Wide-Div">
+            Show Half Lvls{" "}
+            <input
+              className="CheckBox"
+              type="checkbox"
+              onChange={this.props.toggleShowHalfLvls}
             ></input>
           </div>
         </div>
