@@ -1,6 +1,6 @@
 ## Pokémon GO Search String Generator Ver 1.0.0
 
-This app lets you create search strings for any Pokémon with specific IVs.
+This app lets you create search strings for any Pokémon with specific IVs. Try it here at: https://csimbulan.github.io/searchstring/
 
 To use it, start typing a Pokémon species or number in the text bar. A dropdown menu will appear allowing you to select a species.
 
