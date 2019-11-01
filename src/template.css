@@ -37,6 +37,11 @@ h1 {
   font-size: 2vw;
 }
 
+.BodoniHeader {
+  font-family: "Bodoni MT";
+  padding: 1%;
+}
+
 .Header h1 {
   font-family: "Bodoni MT";
   padding: 1%;
@@ -46,6 +51,13 @@ h1 {
   width: 90%;
   font-family: "Serif";
   margin: auto;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1vw;
 }
 
 .AutoCompleteSearch {

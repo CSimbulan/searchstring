@@ -139,3 +139,162 @@
   height: 7.5%;
   vertical-align: middle;
 }
+
+.AlertShow {
+  position: fixed;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  border: solid black 2px;
+  border-radius: 25px;
+  background: white;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+  z-index: 1;
+  align-items: center;
+}
+
+.Text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.AlertHide {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+  border: solid black 2px;
+  border-radius: 25px;
+  background: white;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+  z-index: 1;
+}
+
+.buttonCopy {
+  color: black;
+  height: 25px;
+  background-color: #ffc400;
+  border: 2px solid gray;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 15%;
+  font-size: 1vw;
+  margin: 4px 2px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Add mouse hover effect for buttons. For some reason still works on some mobile devices.*/
+@media (pointer: fine) {
+  .buttonCopy:hover {
+    background-color: yellow;
+    border: 2px solid white;
+    color: gray;
+  }
+
+  .buttonCopy:active {
+    background-color: yellow;
+    box-shadow: none;
+    transform: translateY(2px);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .Table table {
+    font-size: 2.5vw;
+    width: 100%;
+  }
+
+  .Table table th,
+  td {
+    padding: 0.1%;
+  }
+
+  .Table table th {
+    font-size: 1.5vw;
+  }
+
+  h1 {
+    font-size: 4vw;
+  }
+
+  #BlockLeft {
+    font-size: 2vw;
+  }
+
+  .BlockLeftHeader {
+    font-size: 2.3vw;
+  }
+
+  #BlockRight {
+    font-size: 1.5vw;
+  }
+
+  .TypeIcon {
+    width: 25%;
+    height: 25%;
+  }
+  .Box {
+    width: 45%;
+    margin: 5px;
+  }
+
+  .buttonSort {
+    width: 90%;
+    font-size: 3vw;
+  }
+
+  .buttonCopy {
+    width: 25%;
+    font-size: 1.75vw;
+  }
+
+  .buttonManual {
+    width: 40%;
+    font-size: 0.8em;
+  }
+
+  .buttonReset {
+    width: 15%;
+    font-size: 1.75vw;
+  }
+
+  .Header .Instructions {
+    font-size: 0.8em;
+  }
+
+  .modal .content {
+    font-size: 1em;
+    overflow-y: scroll;
+  }
+
+  .Box input {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-height: 600px) and (orientation: portrait) {
+  .modal {
+    height: 120vw;
+  }
+}
+
+@media only screen and (max-height: 600px) and (orientation: landscape) {
+  .modal {
+    height: 40vw;
+  }
+}
