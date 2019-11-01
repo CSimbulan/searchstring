@@ -1,6 +1,6 @@
 Options:
--connect consecutive numbers (e.g. hp15,hp16 -> hp15-16)
--toggle off showing half levels (1.5, 2.5 etc..)
+
 -add IV options with minimum and maximum IVs
+-connect consecutive numbers (e.g. hp15,hp16 -> hp15-16)
 -add preset ranges (e.g. 93%+)
--trash strings
+-add infographic/image generation
