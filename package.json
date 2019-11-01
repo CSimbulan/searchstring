@@ -2,6 +2,7 @@
   "name": "searchstring",
   "version": "1.0.0",
   "private": true,
+  "homepage": "http://csimbulan.github.io/searchstring",
   "dependencies": {
     "react": "^16.11.0",
     "react-copy-to-clipboard": "^5.0.1",
@@ -12,6 +13,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
