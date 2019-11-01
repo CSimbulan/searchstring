@@ -13,11 +13,13 @@ class PageHeader extends Component {
             <p>
               <strong>How it works:</strong> Start typing a Pokémon (species
               name or number) in the text box below. Select the Pokémon you want
-              to generate a table for from the drop down box. Use the sorting
-              and toggle buttons to customize the table. These tables are used
-              as reference sheets for quickly checking a Pokémon's IVs based on
-              their CP value from a normal raid (Level 20), weather boosted raid
-              (Level 25), and research task (Level 15).
+              to generate a table for from the drop down box. Choose the IVs
+              that you want to search for. You can check the boxes if you want
+              to include the search for levels 35.5+ and half levels. The first
+              output box has the string for the Pokémon with potentially the IVs
+              you want (additional appraisal required), and the second output
+              box has the string for those that cannot have those IVs. Copy and
+              paste the string into the Pokémon search bar in the game.
             </p>
             Click on this button for a more detailed user manual:{"     "}
             <Popup
@@ -31,81 +33,51 @@ class PageHeader extends Component {
                   </span>
                   <div className="header">
                     <h1>
-                      Pokémon GO IV Table Generator Ver {this.props.version}
+                      Pokémon GO Search String Generator Ver{" "}
+                      {this.props.version}
                     </h1>
                   </div>
                   <div className="content">
                     <br />
-                    This app lets you create an IV table for any Pokémon.
+                    This app lets you create search strings for any Pokémon with
+                    specific IVs.
                     <br />
                     To use it, start typing a Pokémon species or number in the
                     text bar. A dropdown menu will appear allowing you to select
                     a species.
-                    <br />A table will automatically be generated. You can
-                    choose the following settings:
                     <br />
-                    <h2>Sort Settings</h2>
-                    <ul>
-                      <li>
-                        Sort by CP at level 20. in descending order. If two CPs
-                        are equal then it will next sort by CP at the highest
-                        level shown, followed by IV percentage.
-                      </li>
-                      <li>
-                        Sort by IV percentage in descending order. If two IVs
-                        are equal then it will next sort by CP at level 20,
-                        follow by CP at the highest level shown.
-                      </li>
-                      <li>
-                        Sort by ATK IV in descending order. If two ATK IVs are
-                        equal then it will next sort by IV percentage, followed
-                        by CP at the highest level shown.
-                      </li>
-                    </ul>
-                    <h2>Toggle Settings</h2>
-                    <ul>
-                      <li>
-                        Nundo: this will show the stats for an IV percentage of
-                        66.7% (10/10/10), which the lowest you can get from a
-                        raid / egg hatch. If this setting is toggled ON then it
-                        will show even if the Under 90 setting is OFF.
-                      </li>
-                      <li>
-                        Level 15: this will show CP and HP for level 15. This is
-                        useful for research task Pokémon which are caught at
-                        level 15.
-                      </li>
-                      <li>
-                        Under 90%: this will show all combinations of thats from
-                        66.7% (10/10/10) to 100% (15/15/15). The nundo stats
-                        will show even if this setting is OFF.
-                      </li>
-                      <li>
-                        Colored rows: this will toggle ON/OFF the coloring of
-                        table rows.
-                      </li>
-                    </ul>
-                    <h2>CP Filter</h2>
-                    <ul>
-                      <li>
-                        Show Only CP: the table will only show IV combinations
-                        that produce a CP matched with the value entered here.
-                      </li>
-                    </ul>
-                    <h2>Highest Level</h2>
-                    <ul>
-                      <li>
-                        Select which level the last two columns will show CP and
-                        HP for.
-                      </li>
-                    </ul>
-                    <h2>Export As CSV File</h2>
-                    This button will export the table data to a csv file. Note
-                    that all the values will be wrapped in double quotation
-                    marks. This is how the library used to export does it. There
-                    is supposed to be a way to remove the quotes but it does not
-                    seem to be working.
-                    <h2>Reset</h2>
+                    The strings will automatically be generated. You can choose
+                    the following settings:
+                    <br />
+                    <h2>ATK/DEF/STA IVs</h2>
+                    Set the specific IVs you want to search for.
+                    <h2>Show Lvls 35.5-40</h2>
+                    Check this box if you want to include Pokémon from levels
+                    35.5 to 40 in the search. This is unchecked by default. Note
+                    that Pokémon do not spawn in the wild past level 35 so this
+                    is only for powered up Pokémon.
+                    <h2>Show Half Lvls</h2>
+                    Check this box if you want to include Pokémon with half
+                    levels in the search. Note that Pokémon do not spawn with
+                    half levels in the wild so this is only for powered up
+                    Pokémon.
+                    <h1>First Output Box</h1>
+                    This box will show the string used to search for the desired
+                    Pokémon with the specified IVs. Note that the search will
+                    yield Pokémon that POTENTIALLY have those IVs; the CP and HP
+                    value will match. Additional appraisal may be necessary to
+                    confirm it does have the desired IVs.
+                    <h1>Trash Strings</h1>
+                    This box will show the string used to search for the desired
+                    Pokémon but with every IV combination other than the
+                    specified one. This is used to search for all of the desired
+                    Pokémon that you may want to transfer. For example, you
+                    specify that you want to search for a 15/15/15 (ATK/DEF/STA)
+                    Pokémon, the first output box will give a string that
+                    searches for the 15/15/15 Pokémon, and the trash string will
+                    search for everything else. HP is not required in the string
+                    because the CP not matching is sufficient information.
+                    <h2>Reset Button</h2>
                     Clears the table and resets all settings to default.
                   </div>
                   <div className="actions">
