@@ -5,6 +5,7 @@ import Instructions from "./components/Instructions";
 import AutoCompleteSearch from "./components/AutoCompleteSearch";
 import Options from "./components/Options";
 import Output from "./components/Output";
+import PageFooter from "./components/PageFooter";
 import pokemondata from "./data/pokemondata";
 import cpmultipliers from "./data/cpmultipliers";
 import weatherBoosts from "./data/weatherBoosts";
@@ -23,6 +24,7 @@ function getinitialState() {
       text: "",
       selectedStats: [],
       cpArray: [],
+      trashString: "",
       statsArray: [],
       typing: [],
       counters: [],
@@ -32,7 +34,7 @@ function getinitialState() {
     options: {
       id: "options",
       sort: "cp",
-      toggle: { show36plus: false },
+      toggle: { show36plus: false, showHalfLvls: false },
       cpfilter: false,
       filtervalue: "",
       atkiv: 15,
@@ -191,13 +193,18 @@ class App extends Component {
     var MAXLEVEL = 35;
     var cps = [this.state.search.selected_number.split("_")[0] + stars];
     var hps = [];
+    var trash = this.state.search.selected_number.split("_")[0];
     var atk = parseInt(this.state.search.selectedStats[0]);
     var def = parseInt(this.state.search.selectedStats[1]);
     var sta = parseInt(this.state.search.selectedStats[2]);
+    var step = 1;
+    if (this.state.options.toggle.showHalfLvls) {
+      step -= 0.5;
+    }
     if (this.state.options.toggle.show36plus) {
       MAXLEVEL = 40;
     }
-    for (var i = 1; i <= MAXLEVEL; i += 0.5) {
+    for (var i = 1; i <= MAXLEVEL; i += step) {
       cps.push(
         "cp" +
           Math.max(
@@ -205,6 +212,12 @@ class App extends Component {
             10
           )
       );
+      trash +=
+        "&!cp" +
+        Math.max(
+          this.calculateCP(atk + atkiv, def + defiv, sta + staiv, i),
+          10
+        );
       hps.push(
         "hp" + Math.floor((sta + this.state.options.staiv) * this.getCPM(i))
       );
@@ -216,6 +229,7 @@ class App extends Component {
     start = start.concat(hps.slice(1)); // Push the rest of the hps array.
     const state = { ...this.state };
     state.search.cpArray = start;
+    state.search.trashString = trash;
     state.options.percentage = percentage;
     state.options.stars = stars.slice(1);
     this.setState(() => ({ state }));
@@ -260,6 +274,20 @@ class App extends Component {
     }
   };
 
+  toggleShowHalfLvls = e => {
+    const state = { ...this.state };
+
+    state.options.toggle.showHalfLvls = !state.options.toggle.showHalfLvls;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected) {
+      this.getCPLoop();
+    }
+  };
+
+  reset = () => {
+    this.setState(getinitialState());
+  };
+
   render() {
     return (
       <div className="App">
@@ -282,10 +310,12 @@ class App extends Component {
             onDefChanged={this.onDefChanged}
             onStaChanged={this.onStaChanged}
             toggleShowAllLevels={this.toggleShowAllLevels}
+            toggleShowHalfLvls={this.toggleShowHalfLvls}
           ></Options>
           <br />
           <Output
             cpArray={this.state.search.cpArray.join(",")}
+            trashString={this.state.search.trashString}
             options={this.state.options}
             stats={this.state.search.statsArray}
             selected={this.state.search.selected}
@@ -295,7 +325,9 @@ class App extends Component {
             counters={this.state.search.counters}
             resistances={this.state.search.resistances}
             weather={this.state.search.weather}
+            onClickReset={this.reset}
           />
+          <PageFooter version={this.state.version_number} />
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import released_gen5 from "../data/released_gen5";
 
 class Output extends Component {
-  state = {};
+  state = { showAlert: false };
 
   getName = () => {
     let header = "";
@@ -125,6 +126,24 @@ class Output extends Component {
     }
   };
 
+  getAlertClass = () => {
+    if (this.state.showAlert) {
+      return "AlertShow";
+    } else {
+      return "AlertHide";
+    }
+  };
+
+  onClickShowAlert = () => {
+    this.setState({ showAlert: true });
+    setTimeout(
+      function() {
+        this.setState({ showAlert: false });
+      }.bind(this),
+      1000
+    );
+  };
+
   render() {
     return (
       <div className="Output">
@@ -206,6 +225,45 @@ class Output extends Component {
         <div className="OutputText">
           <span>{this.props.cpArray}</span>
         </div>
+        <CopyToClipboard
+          text={this.props.cpArray}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <button className="buttonCopy" onClick={this.onClickShowAlert}>
+            Copy to Clipboard
+          </button>
+        </CopyToClipboard>
+        <br></br>
+        <br></br>
+        <h1 className="BodoniHeader">Trash Strings:</h1>
+        <br></br>
+        <div className="OutputText">
+          <span>{this.props.trashString}</span>
+        </div>
+
+        <CopyToClipboard
+          text={this.props.trashString}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <button className="buttonCopy" onClick={this.onClickShowAlert}>
+            Copy to Clipboard
+          </button>
+        </CopyToClipboard>
+
+        <div className={this.getAlertClass()}>
+          <div className="Text">Copied to Clipboard!</div>
+        </div>
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <button className="buttonReset" onClick={this.props.onClickReset}>
+          Reset
+        </button>
+        <br />
+        <br />
       </div>
     );
   }
