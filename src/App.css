@@ -125,6 +125,7 @@
   width: 20px;
   height: 20px;
   vertical-align: middle;
+  border: none;
 }
 
 .invis {
@@ -138,6 +139,10 @@
   width: 7.5%;
   height: 7.5%;
   vertical-align: middle;
+}
+
+.OptionsText {
+  font-size: 0.75em;
 }
 
 .AlertShow {
@@ -192,7 +197,7 @@
   text-decoration: none;
   display: inline-block;
   width: 15%;
-  font-size: 1vw;
+  font-size: 0.8vw;
   margin: 4px 2px;
   border-radius: 12px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -254,7 +259,7 @@
   }
 
   .buttonSort {
-    width: 90%;
+    width: 25vw;
     font-size: 3vw;
   }
 
@@ -285,11 +290,20 @@
   .Box input {
     width: 90%;
   }
+
+  .OptionsText {
+    font-size: 2vw;
+  }
 }
 
 @media only screen and (max-height: 600px) and (orientation: portrait) {
   .modal {
     height: 120vw;
+  }
+
+  .Middle {
+    width: 50%;
+    visibility: hidden;
   }
 }
 

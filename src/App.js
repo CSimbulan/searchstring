@@ -33,15 +33,18 @@ function getinitialState() {
     },
     options: {
       id: "options",
-      sort: "cp",
       toggle: { show36plus: false, showHalfLvls: false },
       cpfilter: false,
       filtervalue: "",
       atkiv: 15,
       defiv: 15,
       staiv: 15,
+      maxatkiv: 15,
+      maxdefiv: 15,
+      maxstaiv: 15,
       percentage: 0,
-      stars: ""
+      stars: "",
+      ivtype: "specific"
     },
     version_number: "1.0.0"
   };
@@ -265,7 +268,52 @@ class App extends Component {
     }
   };
 
-  toggleShowAllLevels = e => {
+  onMaxAtkChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.maxatkiv = value;
+    this.setState(() => ({ state }));
+    if (
+      this.state.search.selected &&
+      !isNaN(value) &&
+      value <= 15 &&
+      value >= state.options.atkiv
+    ) {
+      this.getCPLoop();
+    }
+  };
+
+  onMaxDefChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.maxdefiv = value;
+    this.setState(() => ({ state }));
+    if (
+      this.state.search.selected &&
+      !isNaN(value) &&
+      value <= 15 &&
+      value >= state.options.defiv
+    ) {
+      this.getCPLoop();
+    }
+  };
+
+  onMaxStaChanged = e => {
+    const value = parseInt(e.target.value);
+    const state = { ...this.state };
+    state.options.maxstaiv = value;
+    this.setState(() => ({ state }));
+    if (
+      this.state.search.selected &&
+      !isNaN(value) &&
+      value <= 15 &&
+      value >= state.options.staiv
+    ) {
+      this.getCPLoop();
+    }
+  };
+
+  toggleShowAllLevels = () => {
     const state = { ...this.state };
     state.options.toggle.show36plus = !state.options.toggle.show36plus;
     this.setState(() => ({ state }));
@@ -274,10 +322,18 @@ class App extends Component {
     }
   };
 
-  toggleShowHalfLvls = e => {
+  toggleShowHalfLvls = () => {
     const state = { ...this.state };
-
     state.options.toggle.showHalfLvls = !state.options.toggle.showHalfLvls;
+    this.setState(() => ({ state }));
+    if (this.state.search.selected) {
+      this.getCPLoop();
+    }
+  };
+
+  changeIVType = value => {
+    const state = { ...this.state };
+    state.options.ivtype = value;
     this.setState(() => ({ state }));
     if (this.state.search.selected) {
       this.getCPLoop();
@@ -309,8 +365,12 @@ class App extends Component {
             onAtkChanged={this.onAtkChanged}
             onDefChanged={this.onDefChanged}
             onStaChanged={this.onStaChanged}
+            onMaxAtkChanged={this.onMaxAtkChanged}
+            onMaxDefChanged={this.onMaxDefChanged}
+            onMaxStaChanged={this.onMaxStaChanged}
             toggleShowAllLevels={this.toggleShowAllLevels}
             toggleShowHalfLvls={this.toggleShowHalfLvls}
+            changeIVType={value => this.changeIVType(value)}
           ></Options>
           <br />
           <Output

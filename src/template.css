@@ -135,19 +135,36 @@ footer {
 .Options {
   width: 90%;
   margin: auto;
+}
 
+.OptionsWrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   flex-flow: wrap;
+  width: 100%;
+}
+
+.IVWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
+  width: 100%;
 }
 
 .Box {
   border: 1px solid black;
   background-color: #ffd4d4;
-  width: 24%;
   box-sizing: border-box;
+  margin: auto;
   padding: 0.5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: wrap;
+  width: 48%;
 }
 
 .Box-Wide {
@@ -194,7 +211,7 @@ footer {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  width: 45%;
+  width: 10vw;
   font-size: 1vw;
   margin: 4px 2px;
   border-radius: 12px;
@@ -207,82 +224,8 @@ footer {
 }
 
 .notHighlighted {
-  background-color: #4caf50;
+  background-color: #af4c4c;
   border: 2px solid gray;
-}
-
-@media only screen and (max-width: 600px) {
-  .Table table {
-    font-size: 2.5vw;
-    width: 100%;
-  }
-
-  .Table table th,
-  td {
-    padding: 0.1%;
-  }
-
-  .Table table th {
-    font-size: 1.5vw;
-  }
-
-  h1 {
-    font-size: 4vw;
-  }
-
-  #BlockLeft {
-    font-size: 2vw;
-  }
-
-  .BlockLeftHeader {
-    font-size: 2.3vw;
-  }
-
-  #BlockRight {
-    font-size: 1.5vw;
-  }
-
-  .TypeIcon {
-    width: 25%;
-    height: 25%;
-  }
-  .Box {
-    width: 45%;
-    margin: 5px;
-  }
-
-  .buttonSort {
-    width: 90%;
-    font-size: 3vw;
-  }
-
-  .buttonExport {
-    width: 25%;
-    font-size: 1.75vw;
-  }
-
-  .buttonManual {
-    width: 40%;
-    font-size: 0.8em;
-  }
-
-  .buttonReset {
-    width: 15%;
-    font-size: 1.75vw;
-  }
-
-  .Header .Instructions {
-    font-size: 0.8em;
-  }
-
-  .modal .content {
-    font-size: 1em;
-    overflow-y: scroll;
-  }
-
-  .Box input {
-    width: 90%;
-  }
 }
 
 /* Add mouse hover effect for buttons. For some reason still works on some mobile devices.*/
