@@ -132,18 +132,28 @@ class Options extends Component {
 
           <div className="Box Smaller">
             <div className="Box-Wide-Div">
-              <h3>Include:</h3>
+              <h3>Levels:</h3>
+            </div>
+
+            <div className="Box-Wide-Div">
+              <span className="OptionsText">Min:</span>
+              <input
+                type="number"
+                min="1"
+                max="40"
+                value={this.props.options.minlevel}
+                onChange={this.props.onMinLvlChanged}
+              ></input>
             </div>
             <div className="Box-Wide-Div">
-              <button
-                className={this.highlightToggle(
-                  this.props.options.toggle.show36plus
-                )}
-                onClick={this.props.toggleShowAllLevels}
-              >
-                Lvls 35.5-40{" "}
-                {this.getEmoji(this.props.options.toggle.show36plus)}
-              </button>
+              <span className="OptionsText">Max:</span>
+              <input
+                type="number"
+                min={this.props.options.minlevel}
+                max="40"
+                value={this.props.options.maxlevel}
+                onChange={this.props.onMaxLvlChanged}
+              ></input>
             </div>
             <div className="Box-Wide-Div">
               <button
