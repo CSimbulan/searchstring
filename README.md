@@ -1,4 +1,4 @@
-## Pokémon GO Search String Generator Ver 1.0.0
+## Pokémon GO Search String Generator Ver 1.1.0
 
 This app lets you create search strings for any Pokémon with specific IVs. Try it here at: https://csimbulan.github.io/searchstring/
 
