@@ -6,13 +6,23 @@ To use it, start typing a Pokémon species or number in the text bar. A dropdown
 
 The strings will automatically be generated. You can choose the following settings:
 
+## IV Type
+
+### Specific:
+
+Search for Pokémon with this specific set of IVs.
+
+### Range:
+
+Choose a custom range of IVs to search for.
+
 ## ATK/DEF/STA IVs
 
 Set the specific IVs you want to search for.
 
-## Show Lvls 35.5-40
+## Levels
 
-Check this box if you want to include Pokémon from levels 35.5 to 40 in the search. This is unchecked by default. Note that Pokémon do not spawn in the wild past level 35 so this is only for powered up Pokémon.
+Choose a custom range of levels to search for.
 
 ## Show Half Lvls
 

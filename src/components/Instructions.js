@@ -14,12 +14,13 @@ class PageHeader extends Component {
               <strong>How it works:</strong> Start typing a Pokémon (species
               name or number) in the text box below. Select the Pokémon you want
               to generate a table for from the drop down box. Choose the IVs
-              that you want to search for. You can check the boxes if you want
-              to include the search for levels 35.5+ and half levels. The first
-              output box has the string for the Pokémon with potentially the IVs
-              you want (additional appraisal required), and the second output
-              box has the string for those that cannot have those IVs. Copy and
-              paste the string into the Pokémon search bar in the game.
+              that you want to search for, either a specific set or a range. You
+              can also customize the level range and toggle on/off half levels.
+              The first output box has the string for the Pokémon with
+              potentially the IVs you want (additional appraisal required), and
+              the second output box has the string for those that cannot have
+              those IVs. Copy and paste the string into the Pokémon search bar
+              in the game.
             </p>
             Click on this button for a more detailed user manual:{"     "}
             <Popup
@@ -49,13 +50,15 @@ class PageHeader extends Component {
                     The strings will automatically be generated. You can choose
                     the following settings:
                     <br />
+                    <h2>IV Type:</h2>
+                    <h3>Specific</h3>
+                    Search for Pokémon with this specific set of IVs.
+                    <h3>Range</h3>
+                    Choose a custom range of IVs to search for.
                     <h2>ATK/DEF/STA IVs</h2>
                     Set the specific IVs you want to search for.
-                    <h2>Show Lvls 35.5-40</h2>
-                    Check this box if you want to include Pokémon from levels
-                    35.5 to 40 in the search. This is unchecked by default. Note
-                    that Pokémon do not spawn in the wild past level 35 so this
-                    is only for powered up Pokémon.
+                    <h2>Levels</h2>
+                    Choose a custom range of levels to search for.
                     <h2>Show Half Lvls</h2>
                     Check this box if you want to include Pokémon with half
                     levels in the search. Note that Pokémon do not spawn with
