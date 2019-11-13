@@ -1,6 +1,5 @@
 Options:
 
--add IV options with minimum and maximum IVs
--connect consecutive numbers (e.g. hp15,hp16 -> hp15-16)
 -add preset ranges (e.g. 93%+)
 -add infographic/image generation
+-add support for top pvp ranges (hard)
