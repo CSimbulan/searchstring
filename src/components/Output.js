@@ -100,26 +100,33 @@ class Output extends Component {
     if (this.props.selected === "") {
       return "";
     }
-
-    return " (" + (this.props.options.percentage * 100).toFixed(1) + "%)";
+    var percentString = "";
+    percentString +=
+      " (" + (this.props.options.minpercentage * 100).toFixed(1) + "%";
+    if (this.props.options.ivtype === "range") {
+      percentString +=
+        " - " + (this.props.options.maxpercentage * 100).toFixed(1) + "%";
+    }
+    percentString += ")";
+    return percentString;
   };
 
   getStarsSticker = () => {
     if (this.props.selected === "") {
       return "";
     }
-    let stars = this.props.options.stars;
+    let stars = this.props.options.minstars;
 
     switch (true) {
-      case stars === "0*":
+      case stars === 0:
         return process.env.PUBLIC_URL + "/misc_icons/zero_stars.png";
-      case stars === "1*":
+      case stars === 1:
         return process.env.PUBLIC_URL + "/misc_icons/one_star.png";
-      case stars === "2*":
+      case stars === 2:
         return process.env.PUBLIC_URL + "/misc_icons/two_stars.png";
-      case stars === "3*":
+      case stars === 3:
         return process.env.PUBLIC_URL + "/misc_icons/three_stars.png";
-      case stars === "4*":
+      case stars === 4:
         return process.env.PUBLIC_URL + "/misc_icons/four_stars.png";
       default:
         return process.env.PUBLIC_URL + "/misc_icons/zero_stars.png";
@@ -144,18 +151,24 @@ class Output extends Component {
     );
   };
 
+  getStars = () => {
+    if (this.props.selected === "") {
+      return "";
+    }
+    if (this.props.options.ivtype === "specific") {
+      return (
+        <img className="StarsSticker" src={this.getStarsSticker()} alt=""></img>
+      );
+    }
+  };
+
   render() {
     return (
       <div className="Output">
         <h1>
           <div className={this.getHeaderClass()}>
             {this.getName() + this.formatPercent()}
-
-            <img
-              className="StarsSticker"
-              src={this.getStarsSticker()}
-              alt=""
-            ></img>
+            {this.getStars()}
           </div>
         </h1>
         <div className={this.getImageClass()}>

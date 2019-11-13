@@ -42,7 +42,8 @@ function getinitialState() {
       maxatkiv: 15,
       maxdefiv: 15,
       maxstaiv: 15,
-      percentage: 0,
+      minpercentage: 0,
+      maxpercentage: 0,
       stars: "",
       ivtype: "specific"
     },
@@ -173,68 +174,118 @@ class App extends Component {
   determineStars = percent => {
     switch (true) {
       case percent < 0.49:
-        return "&0*";
+        return 0;
       case percent < 0.65:
-        return "&1*";
+        return 1;
       case percent < 0.82:
-        return "&2*";
+        return 2;
       case percent < 1:
-        return "&3*";
+        return 3;
       case percent === 1:
-        return "&4*";
+        return 4;
       default:
         return "";
     }
   };
 
   getCPLoop = () => {
-    var atkiv = this.state.options.atkiv;
-    var defiv = this.state.options.defiv;
-    var staiv = this.state.options.staiv;
-    var percentage = this.calculatePercentage(atkiv, defiv, staiv);
-    var stars = this.determineStars(percentage);
+    var minatkiv = this.state.options.atkiv;
+    var mindefiv = this.state.options.defiv;
+    var minstaiv = this.state.options.staiv;
+    var maxatkiv = this.state.options.maxatkiv;
+    var maxdefiv = this.state.options.maxdefiv;
+    var maxstaiv = this.state.options.maxstaiv;
+    var minpercentage = this.calculatePercentage(minatkiv, mindefiv, minstaiv);
+    var maxpercentage = this.calculatePercentage(maxatkiv, maxdefiv, maxstaiv);
+    var minstars = this.determineStars(minpercentage);
+    var maxstars = this.determineStars(maxpercentage);
     var MAXLEVEL = 35;
-    var cps = [this.state.search.selected_number.split("_")[0] + stars];
+    var start = this.state.search.selected_number.split("_")[0] + "&";
+    for (var i = minstars; i <= maxstars; i++) {
+      start += i + "*";
+      if (i < maxstars) {
+        start += ",";
+      }
+    }
+    var cps = [];
     var hps = [];
     var trash = this.state.search.selected_number.split("_")[0];
     var atk = parseInt(this.state.search.selectedStats[0]);
     var def = parseInt(this.state.search.selectedStats[1]);
     var sta = parseInt(this.state.search.selectedStats[2]);
     var step = 1;
+    var tempcp = 0;
+    var temphp = 0;
     if (this.state.options.toggle.showHalfLvls) {
       step -= 0.5;
     }
     if (this.state.options.toggle.show36plus) {
       MAXLEVEL = 40;
     }
-    for (var i = 1; i <= MAXLEVEL; i += step) {
-      cps.push(
-        "cp" +
-          Math.max(
-            this.calculateCP(atk + atkiv, def + defiv, sta + staiv, i),
-            10
-          )
-      );
-      trash +=
-        "&!cp" +
-        Math.max(
-          this.calculateCP(atk + atkiv, def + defiv, sta + staiv, i),
-          10
-        );
-      hps.push(
-        "hp" + Math.floor((sta + this.state.options.staiv) * this.getCPM(i))
-      );
+    for (i = 1; i <= MAXLEVEL; i += step) {
+      for (var a = minatkiv; a <= maxatkiv; a++) {
+        for (var d = mindefiv; d <= maxdefiv; d++) {
+          for (var s = minstaiv; s <= maxstaiv; s++) {
+            tempcp = Math.max(
+              this.calculateCP(atk + a, def + d, sta + s, i),
+              10
+            );
+            temphp = Math.floor((sta + s) * this.getCPM(i));
+            if (!cps.includes(tempcp)) {
+              cps.push(tempcp);
+            }
+            if (!hps.includes(temphp)) {
+              hps.push(temphp);
+            }
+          }
+        }
+      }
     }
-    var start = [];
-    start.push(cps.slice(0, 2).join("&")); // Combine the dex number, stars rating, and first index of cps with "&".
-    start = start.concat(cps.slice(2, -1)); // Push the rest of the cps array.
-    start.push(cps[cps.length - 1] + "&" + hps[0]); // Combine the last index of cps and first index of hps with "&".
-    start = start.concat(hps.slice(1)); // Push the rest of the hps array.
+    cps = cps.sort(function(a, b) {
+      return a - b;
+    });
+    hps = hps.sort(function(a, b) {
+      return a - b;
+    });
+    start += "&";
+    trash += "&";
+    for (i = 0; i < cps.length; i++) {
+      if (!cps.includes(cps[i] - 1)) {
+        start += "cp" + cps[i];
+        trash += "!cp" + cps[i];
+      } else {
+        if (!cps.includes(cps[i] + 1)) {
+          start += "-" + cps[i];
+          trash += "-" + cps[i];
+        }
+      }
+
+      if (i < cps.length - 1 && !cps.includes(cps[i] + 1)) {
+        start += ",";
+        trash += "&";
+      }
+    }
+    start += "&";
+    for (i = 0; i < hps.length; i++) {
+      if (!hps.includes(hps[i] - 1)) {
+        start += "hp" + hps[i];
+      } else {
+        if (!hps.includes(hps[i] + 1)) {
+          start += "-" + hps[i];
+        }
+      }
+
+      if (i < hps.length - 1 && !hps.includes(hps[i] + 1)) {
+        start += ",";
+      }
+    }
     const state = { ...this.state };
     state.search.cpArray = start;
     state.search.trashString = trash;
-    state.options.percentage = percentage;
-    state.options.stars = stars.slice(1);
+    state.options.minpercentage = minpercentage;
+    state.options.maxpercentage = maxpercentage;
+    state.options.minstars = minstars;
+    state.options.maxstars = maxstars;
     this.setState(() => ({ state }));
   };
 
@@ -242,6 +293,9 @@ class App extends Component {
     const value = parseInt(e.target.value);
     const state = { ...this.state };
     state.options.atkiv = value;
+    if (state.options.ivtype === "specific") {
+      state.options.maxatkiv = value;
+    }
     this.setState(() => ({ state }));
     if (this.state.search.selected && !isNaN(value) && value <= 15) {
       this.getCPLoop();
@@ -252,6 +306,9 @@ class App extends Component {
     const value = parseInt(e.target.value);
     const state = { ...this.state };
     state.options.defiv = value;
+    if (state.options.ivtype === "specific") {
+      state.options.maxdefiv = value;
+    }
     this.setState(() => ({ state }));
     if (this.state.search.selected && !isNaN(value) && value <= 15) {
       this.getCPLoop();
@@ -262,6 +319,9 @@ class App extends Component {
     const value = parseInt(e.target.value);
     const state = { ...this.state };
     state.options.staiv = value;
+    if (state.options.ivtype === "specific") {
+      state.options.maxstaiv = value;
+    }
     this.setState(() => ({ state }));
     if (this.state.search.selected && !isNaN(value) && value <= 15) {
       this.getCPLoop();
@@ -334,6 +394,16 @@ class App extends Component {
   changeIVType = value => {
     const state = { ...this.state };
     state.options.ivtype = value;
+    if (state.options.ivtype === "range") {
+      state.options.maxatkiv = 15;
+      state.options.maxdefiv = 15;
+      state.options.maxstaiv = 15;
+    } else {
+      state.options.maxatkiv = state.options.atkiv;
+      state.options.maxdefiv = state.options.defiv;
+      state.options.maxstaiv = state.options.staiv;
+    }
+
     this.setState(() => ({ state }));
     if (this.state.search.selected) {
       this.getCPLoop();
@@ -374,7 +444,7 @@ class App extends Component {
           ></Options>
           <br />
           <Output
-            cpArray={this.state.search.cpArray.join(",")}
+            cpArray={this.state.search.cpArray}
             trashString={this.state.search.trashString}
             options={this.state.options}
             stats={this.state.search.statsArray}
