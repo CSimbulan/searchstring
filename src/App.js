@@ -49,7 +49,7 @@ function getinitialState() {
       minlevel: 1,
       maxlevel: 35
     },
-    version_number: "1.0.0"
+    version_number: "1.1.0"
   };
 }
 
